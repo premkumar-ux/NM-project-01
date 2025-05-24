@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_PRODUCTS 100
+#define MAX_INTERESTS 10
+#define MAX_LEN 100
+
+typedef struct {
+    char name[MAX_LEN];
+    char category[MAX_LEN];
+} Product;
+
+typedef struct {
+    char username[MAX_LEN];
+    char interests[MAX_INTERESTS][MAX_LEN];
+    int interest_count;
+} User;
+
+int main() {
+
+    Product products[MAX_PRODUCTS] = {
+        {"iPhone", "Electronics"},
+        {"T-shirt", "Clothing"},
+        {"Basketball", "Sports"},
+        {"Laptop", "Electronics"},
+        {"Novel", "Books"},
+        {"Earings","Accessories"},
+        {"Ball","Toys"}
+    };
+    int product_count = 5;
+
+    User user = {
+        "john_doe",
+        { "Electronics", "Books","Sports","Clothing" },
+        5
+    };
+
+    printf("Recommended products for %s:\n", user.username);
+    int found = 0;
+    for (int i = 0; i < product_count; i++) {
+        for (int j = 0; j < user.interest_count; j++) {
+            if (strcmp(products[i].category, user.interests[j]) == 0) {
+                printf("- %s (%s)\n", products[i].name, products[i].category);
+                found = 1;
+            }
+        }
+    }
+    if (!found) {
+        printf("No matching products found.\n");
+    }
+
+    return 0;
+}
